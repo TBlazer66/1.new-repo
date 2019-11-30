@@ -3,7 +3,8 @@ require Exporter;
 
 our @ISA    = qw(Exporter);
 our @EXPORT = qw(
-  flip
+flip
+  flip2
   crosswords
   score
   printboard
@@ -12,7 +13,23 @@ our @EXPORT = qw(
   place
 );
 
-sub flip    # transpose
+sub flip # both board and heights arrays
+  {
+
+  my ( $board, $heights ) = @_;
+  my @ans;
+  local $_ = $board;
+  $board = '';
+  $board .= "\n" while s/^./ $board .= $& ; '' /gem;
+  $_ = $heights;
+  $heights = '';
+  $heights .= "\n" while s/^./ $heights .= $& ; '' /gem;
+  @ans = ($board, $heights);
+  return @ans;
+  }
+
+
+sub flip2    # transpose only works in script file scope
 {
   map {
     ( local $_, my $flipped ) = ( $_, '' );
